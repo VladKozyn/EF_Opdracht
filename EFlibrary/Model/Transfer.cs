@@ -13,7 +13,7 @@ namespace EFlibrary
         public Team nieuwTeam { get; set; }
         public int SpelerId { get; set; }
         public int NieuwTeamId { get; set; }
-
+        public int OudTeamStamNummer { get; set; }
         public Transfer(Speler speler, int spelerWaarde, Team nieuwTeam)
         {
             Speler = speler;
@@ -21,11 +21,12 @@ namespace EFlibrary
             this.nieuwTeam = nieuwTeam;
         }
 
-        public Transfer(int spelerWaarde, int spelerId, int nieuwTeamId)
+        public Transfer(int spelerWaarde,int oudTeamStamNummer, int spelerId, int nieuwTeamId)
         {
             SpelerWaarde = spelerWaarde;
             SpelerId = spelerId;
             NieuwTeamId = nieuwTeamId;
+            OudTeamStamNummer = oudTeamStamNummer;
         }
     }
 }

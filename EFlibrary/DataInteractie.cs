@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
 
 namespace EFlibrary
 {
@@ -72,17 +71,32 @@ namespace EFlibrary
         }
         public void VoegTransferToe(Transfer transfer)
         {
-            ctx.Transfers.Add(transfer);
-            ctx.SaveChanges();
-        }
-    /*    public void UpdateSpeler(Speler speler)
-        {
+            if(ctx.Spelers.Any(x=>x.Id == transfer.SpelerId))
+            {
+                if(ctx.Teams.Any(x => x.StamNummer == transfer.NieuwTeamId))
+                {
+                    ctx.Transfers.Add(transfer);
 
-        }
-        public void UpdateTeam(Team speler)
-        {
+                 //       var TeamUpdate = ctx.Teams.SingleOrDefault(a => a.StamNummer == transfer.NieuwTeamId);
+                    var spelerUpdate = ctx.Spelers.SingleOrDefault(b => b.Id == transfer.SpelerId);
 
-        } dunno*/ 
+                    spelerUpdate.Waarde = transfer.SpelerWaarde;
+                    spelerUpdate.TeamStamnummer = transfer.NieuwTeamId;
+
+                    ctx.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("team bestaat niet");
+                }
+            }
+            else
+            {
+                throw new Exception("speler bestaat niet");
+            }
+            
+        }
+
         public Speler SeleteerSpeler(int spelerID)
         {
             Speler speler = ctx.Spelers.Where(s => s.Id == spelerID).FirstOrDefault();
